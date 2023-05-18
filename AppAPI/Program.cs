@@ -4,6 +4,10 @@ using Couchbase.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Add Couchbase configuration
+builder.Services.AddCouchbase(builder.Configuration.GetSection("Couchbase"));
+builder.Services.AddCouchbaseBucket<INamedBucketProvider>("test");
+
 
 // Add Kafka Producer configuration
 builder.Services.AddSingleton(x =>
@@ -24,10 +28,6 @@ builder.Services.AddSingleton(x =>
 // Add services to the container.
 
 builder.Services.AddControllers();
-
-// Add Couchbase configuration
-builder.Services.AddCouchbase(builder.Configuration.GetSection("Couchbase"));
-builder.Services.AddCouchbaseBucket<INamedBucketProvider>("test");
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
