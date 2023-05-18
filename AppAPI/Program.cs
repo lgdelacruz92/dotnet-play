@@ -1,4 +1,26 @@
+using Confluent.Kafka;
+using Couchbase.Extensions.DependencyInjection;
+
 var builder = WebApplication.CreateBuilder(args);
+
+// Add Couchbase configuration
+builder.Services.AddCouchbase(builder.Configuration.GetSection("Couchbase"));
+
+// Add Kafka Producer configuration
+builder.Services.AddSingleton(x =>
+{
+    var config = new ProducerConfig();
+    builder.Configuration.Bind("Kafka", config);
+    return new ProducerBuilder<Null, string>(config).Build();
+});
+
+// Add Kafka Consumer configuration (if needed)
+builder.Services.AddSingleton(x =>
+{
+    var config = new ConsumerConfig();
+    builder.Configuration.Bind("Kafka", config);
+    return new ConsumerBuilder<Ignore, string>(config).Build();
+});
 
 // Add services to the container.
 
