@@ -1,7 +1,7 @@
 using Couchbase;
 using Couchbase.Extensions.DependencyInjection;
 
-namespace AppServices
+namespace AppAPI.Services
 {
     public class CouchbaseDatabase
     {
